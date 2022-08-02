@@ -1,0 +1,12 @@
+__pycache__/
+/.pytest_cache/
+/.coverage
+*.pyc
+
+dist/
+env/
+venv/
+.env/
+.venv/
+.vscode/
+.ipynb_checkpoints/

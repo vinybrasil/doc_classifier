@@ -1,15 +1,17 @@
 [tool.poetry]
 name = "doc_classifier"
 version = "0.1.0"
-description = "A API for document classification"
+description = ""
 authors = ["vinybrasil <vinicyusbrasil1@hotmail.com>"]
 
 [tool.poetry.dependencies]
-python = "*"
-tensorflow = "*"
-fastapi = "*"
-numpy = "1.23.1"
-Pillow = "*"
+python = ">=3.8,<3.11"
+pillow = "^9.2.0"
+arrow = "^1.2.2"
+tensorflow = "^2.8.2"
+scipy = "^1.9.0"
+uvicorn = "^0.18.2"
+fastapi = "^0.79.0"
 
 [tool.poetry.dev-dependencies]
 
