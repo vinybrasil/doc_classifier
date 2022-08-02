@@ -7,8 +7,7 @@ import tensorflow as tf
 from PIL import Image
 from scipy.special import softmax
 
-from api.objects.output import Prediction, RawPrediction, ProbabilitiesPrediction
-
+from api.objects.output import Prediction, ProbabilitiesPrediction, RawPrediction
 
 SIZE = 64
 
@@ -37,11 +36,21 @@ def predict(image_b64):
     image_as_array = bytes_to_array(image_b64)
     image_ready = prepare_image(image_as_array)
     raw_prediction = model.predict(image_ready)
-    class_predicted = "selfie" if (softmax(raw_prediction[0])[0] > softmax(raw_prediction[0])[1]) else "document"
+    class_predicted = (
+        "selfie"
+        if (softmax(raw_prediction[0])[0] > softmax(raw_prediction[0])[1])
+        else "document"
+    )
 
-    prediction = Prediction(raw_prediction =  RawPrediction(selfie_score=list(raw_prediction[0])[0], 
-                                                            document_score= list(raw_prediction[0])[1]), 
-                            probabilities = ProbabilitiesPrediction(selfie_probability =list(softmax(raw_prediction[0]))[0], 
-                                                                    document_probability= list(softmax(raw_prediction[0]))[1]),
-                            class_predicted = class_predicted) 
+    prediction = Prediction(
+        raw_prediction=RawPrediction(
+            selfie_score=list(raw_prediction[0])[0],
+            document_score=list(raw_prediction[0])[1],
+        ),
+        probabilities=ProbabilitiesPrediction(
+            selfie_probability=list(softmax(raw_prediction[0]))[0],
+            document_probability=list(softmax(raw_prediction[0]))[1],
+        ),
+        class_predicted=class_predicted,
+    )
     return prediction
