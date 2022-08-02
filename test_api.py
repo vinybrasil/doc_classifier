@@ -2,12 +2,12 @@ import base64
 
 import requests
 
-print(requests.get("http://localhost:8000/").text)
+# print(requests.get("http://localhost:8000/").text)
 
 encoded_string = base64.b64encode(open("test_pic.jpg", "rb").read())
 encoded_string_utf = encoded_string.decode("utf-8")
 
-print(requests.get("http://localhost:8000/").text)
+# print(requests.get("http://localhost:8000/").text)
 
 print(
     requests.post(
