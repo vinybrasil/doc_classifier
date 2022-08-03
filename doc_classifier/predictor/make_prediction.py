@@ -6,10 +6,13 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 from scipy.special import softmax
+import imagehash
 
 from doc_classifier.objects.output import Prediction, ProbabilitiesPrediction, RawPrediction
 
 SIZE = 64
+
+
 
 
 def load_model():
@@ -22,7 +25,8 @@ def load_model():
 def bytes_to_array(image_b64):
     image_decoded = base64.b64decode(image_b64)
     image = Image.open(io.BytesIO(image_decoded))
-    return np.asarray(image)
+    hash_photo = imagehash.average_hash(image)
+    return np.asarray(image), hash_photo
 
 
 def prepare_image(img):
@@ -33,7 +37,8 @@ def prepare_image(img):
 
 def predict(image_b64):
     model = load_model()
-    image_as_array = bytes_to_array(image_b64)
+    image_as_array, hash_photo = bytes_to_array(image_b64)
+     
     image_ready = prepare_image(image_as_array)
     raw_prediction = model.predict(image_ready)
     max_prob = np.argmax(softmax(raw_prediction[0]))
@@ -52,4 +57,4 @@ def predict(image_b64):
         ),
         class_predicted=class_predicted,
     )
-    return prediction
+    return prediction, str(hash_photo)

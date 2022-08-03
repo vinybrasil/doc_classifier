@@ -15,6 +15,9 @@ def read_root():
 
 @app.post("/classifier/")
 def classifier(a: Optional[dict]):
+    prediction = predict(a["input_photo"])
     return OutputPrediction(
-        leadId=a["leadId"], photoHash="a", prediction=predict(a["input_photo"])
+        leadId=a["leadId"], photoHash=prediction[1], prediction=prediction[0]
     )
+
+
