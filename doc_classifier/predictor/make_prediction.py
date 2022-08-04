@@ -17,7 +17,7 @@ SIZE = 64
 
 def load_model():
     package_dir = os.path.dirname(os.path.abspath(__file__))
-    thefile = os.path.join(package_dir, "resources\model_v8")
+    thefile = os.path.join(package_dir, "resources", "model_v8")
     model = tf.keras.models.load_model(thefile)
     return model
 
