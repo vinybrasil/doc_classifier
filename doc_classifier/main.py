@@ -7,17 +7,19 @@ from doc_classifier.predictor.make_prediction import predict
 
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"VAMOS": "FLAMENGO"}
 
-@app.get("/health_check/")
+@app.get("/health_check")
 def read_root():
     return {"Ping": "Pong"}
 
-
-@app.post("/classifier/")
-def classifier(a: Optional[dict]):
-    prediction = predict(a["input_photo"])
+@app.post("/classifier")
+def classifier(req: Optional[dict]):
+    prediction = predict(req["input_photo"])
     return OutputPrediction(
-        leadId=a["leadId"], photoHash=prediction[1], prediction=prediction[0]
+        leadId=req["leadId"], photoHash=prediction[1], prediction=prediction[0]
     )
 
 

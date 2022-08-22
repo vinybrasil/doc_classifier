@@ -1,0 +1,47 @@
+https://towardsdatascience.com/containerize-your-application-with-docker-b0608557441f
+
+https://stackify.com/aws-lambda-with-python-a-complete-getting-started-guide/
+
+https://fastapi.tiangolo.com/deployment/docker/
+
+https://medium.com/dataengineerbr/how-to-run-aws-lambda-locally-on-your-computer-with-docker-containers-533a3add1b45
+
+https://medium.com/@reginald.johnson/testing-aws-lambda-functions-the-easy-way-41cf1ed8c090
+
+https://towardsdatascience.com/containerize-your-application-with-docker-b0608557441f
+
+https://www.deadbear.io/simple-serverless-fastapi-with-aws-lambda/
+
+https://medium.com/@subham-sahoo/deploy-aws-lambda-function-from-container-2413250a7e13
+
+https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html
+
+docker build -t docclassifier .
+
+#docker run -d --name docclassifier1 -p 8000:80 docclassifier
+
+docker run -d --name docclassifier1 -p 9000:8080 docclassifier
+docker run --rm -p 9000:8080 --name docclassifier1 docclassifier
+
+
+curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+
+docker run --rm -p 9000:8080 --name testlambda1 testlambda
+
+curl -X POST http://localhost:9000/2015-03-31/functions/function/invocations -H 'Content-Type: application/json' -d  "{"""message""":"""Hello Lambda!"""}"
+
+
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 949250876409.dkr.ecr.us-east-1.amazonaws.com
+
+docker tag doc_classifier:0.1.0 949250876409.dkr.ecr.region.amazonaws.com/repo_doc_classifier:0.1.0
+
+
+
+docker build -t doc_classifier . 
+docker tag doc_classifier:latest 949250876409.dkr.ecr.us-east-1.amazonaws.com/doc_classifier:latest
+docker push 949250876409.dkr.ecr.us-east-1.amazonaws.com/doc_classifier:latest 
+
+cria o ecr antes com o nome doc_classifier
+cria a lambda, muda o workdir pra /var/task e aumenta a memoria pra 512 mb e o timeout pra 3 min 
+cria o api gateway e muda mapeia cada rota
+deleta ecr, lambda e a api
